@@ -9,7 +9,7 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/book-management")
-public class BookController {
-
+@Path("/controller")
+public class Controller {
+	
 }
