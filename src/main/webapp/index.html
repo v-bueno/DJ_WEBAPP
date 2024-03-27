@@ -1,10 +1,86 @@
-<!DOCTYPE html>
-<html>
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <head>
-<meta charset="ISO-8859-1">
-<title>Hello title</title>
-</head>
-<body>
-<h1>Hello World</h1>
+<style>
+table, th, td {
+  border: 1px solid;
+  padding:5px;
+}
+table {
+  border-collapse: collapse;
+}
+div {
+margin-top: 10px;}
+</style>
+<script>
+function loadEvents(url) {
+	fetch(url)
+	.then(response => response.json())
+	.then(response => process(response))
+	.catch(error => alert("Erreur : " + error));
+}
+
+
+
+function process(events) {
+	var eventlist = document.getElementById("eventlist");
+	
+	if (eventlist.hasChildNodes()) {
+		eventlist.removeChild(eventlist.firstChild);
+	}
+	
+	var table = document.createElement("table");
+	eventlist.appendChild(table);
+	
+	console.log(events);
+	for (var event of events) {
+		console.log(event);
+		var tr = document.createElement("tr");
+		var td_date = document.createElement("td");
+		td_date.append(event.dateEvent);
+		var td_nomDj = document.createElement("td");
+		td_nomDj.append(event.nomDj);
+		var td_nomClub = document.createElement("td");
+		td_nomClub.append(event.nomClub);
+		var td_ville = document.createElement("td");
+		td_ville.append(event.ville);
+		
+		tr.appendChild(td_date);
+		tr.appendChild(td_nomDj);
+		tr.appendChild(td_nomClub);
+		tr.appendChild(td_ville);
+		table.appendChild(tr);
+	}
+}
+
+function searchByDj() {
+	var Dj = document.getElementById("input_Dj").value;
+	var url ="/DJ-Agenda/api/controller/events?dj="+Dj; 
+	loadEvents(url);}
+
+
+</script>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Editor msdt:dt="string">Alexandre Chennebault</mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Editor>
+<mso:Order msdt:dt="string">4700.00000000000</mso:Order>
+<mso:_ExtendedDescription msdt:dt="string"></mso:_ExtendedDescription>
+<mso:SharedWithUsers msdt:dt="string"></mso:SharedWithUsers>
+<mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Author msdt:dt="string">Alexandre Chennebault</mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Author>
+<mso:ComplianceAssetId msdt:dt="string"></mso:ComplianceAssetId>
+<mso:TriggerFlowInfo msdt:dt="string"></mso:TriggerFlowInfo>
+<mso:ContentTypeId msdt:dt="string">0x010100CECC21A3AFC6F54C9B75756AF591E856</mso:ContentTypeId>
+<mso:_SourceUrl msdt:dt="string"></mso:_SourceUrl>
+<mso:_SharedFileIndex msdt:dt="string"></mso:_SharedFileIndex>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+<title></title></head>
+<body onload="loadEvents('/DJ-Agenda/api/controller/events')">
+
+<h1>Biblioth&egrave;que</h1>
+
+<div id="eventlist"></div>
+<input type ="text" id="input_dj" placeholder="Dj"></input>
+<input type ="button" id="Valider" value="Rechercher" onClick="searchByDj()"></input>
 </body>
 </html>
