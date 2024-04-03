@@ -1,14 +1,17 @@
 package org.api;
 
 import java.util.List;
+import java.sql.Timestamp;
 
 public interface EventDAO {
 	
-	List<Events> findByAll();
+	List<Events> findAll();
 
 	List<Events> findByDJ(String nomDeScene);
 	
-	List<Events> findByLieu(String nomLieu);
+	List<Events> findByClub(String nomClub);
 	
-	List<Events> findByMonth(int month);
+	List<Events> findByVille(String nomVille);
+	
+	List<Events> findByDate(Timestamp dateDebut);
 }

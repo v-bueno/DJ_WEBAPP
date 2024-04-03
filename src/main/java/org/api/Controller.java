@@ -25,14 +25,14 @@ public class Controller {
 		return "Hello World!";
 	}
 	
-	private EventDAO eventDAO = new EventDAOMockImpl();
+	private EventDAO eventDAO = new EventDAOImpl();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/events")
 	public String getEvents(@QueryParam("dj") String dj) {
 		List<Events> events = new ArrayList<Events>();
-		events = eventDAO.findByAll();
+		events = eventDAO.findAll();
 		
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.create();

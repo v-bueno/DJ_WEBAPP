@@ -1,27 +1,38 @@
 package org.api;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Events {
-	private Date dateEvent;
+	private Timestamp dateDebut;
+	private Timestamp dateFin;
 	private String nomDj;
 	private String nomClub;
 	private String ville;
 	
-	public Events(Date dateEvent, String nomDj, String nomClub, String ville) {
+	public Events(Timestamp dateDebut, Timestamp dateFin, String nomDj, String nomClub, String ville) {
 		super();
-		this.dateEvent = dateEvent;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
 		this.nomDj = nomDj;
 		this.nomClub = nomClub;
 		this.ville = ville;
 	}
 	
-	public Date getDateEvent() {
-		return dateEvent;
+	public Date getDateDebut() {
+		return dateDebut;
 	}
 	
-	public void setDateEvent(Date dateEvent) {
-		this.dateEvent = dateEvent;
+	public void setDateDebut(Timestamp dateDebut) {
+		this.dateDebut = dateDebut;
+	}
+	
+	public Date getDateFin() {
+		return dateFin;
+	}
+	
+	public void setDateFin(Timestamp dateFin) {
+		this.dateFin = dateFin;
 	}
 	
 	public String getNomDj() {
@@ -48,10 +59,9 @@ public class Events {
 		this.ville = ville;
 	}
 	
-	@Override
 	public String toString() {
-		return "Events [dateEvent=" + dateEvent + ", nomDj=" + nomDj + ", nomClub=" + nomClub + ", nomVille=" + ville
-				+ "]";
+		return "Event [dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", nomDj=" + nomDj + ", nomClub=" + nomClub
+				+ ", ville=" + ville + "]";
 	}
 	
 	//add a poem making method about events

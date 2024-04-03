@@ -1,22 +1,22 @@
 package org.api;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class EventDAOMockImpl implements EventDAO {
-
+	
 	@Override
-	public List<Events> findByAll() {
+	public List<Events> findAll() {
 		
 		List<Events> ListeEvent = new ArrayList<Events>();
 		
-		// Creating events with  specific dates, DJ names, and location names
-		Events event1 = new Events(new Date(), "DJ John", "Club XYZ", "City A");
-        Events event2 = new Events(new Date(), "DJ Jane", "Club ABC", "City B");
-        Events event3 = new Events(new Date(), "DJ Mike", "Venue 123", "City C");
-        Events event4 = new Events(new Date(), "DJ Sarah", "Nightspot Z", "City D");
-        Events event5 = new Events(new Date(), "DJ Alex", "Club 456", "City E");
+		// Creating events with  specific beginning dates of Timestamp class and ending dates,  DJ names, and location names
+		Events event1 = new Events(new Timestamp(2021, 11, 10, 22, 0, 0, 0), new Timestamp(2021, 11, 11, 4, 0, 0, 0), "DJ1", "Club1", "Ville1");
+		Events event2 = new Events(new Timestamp(2021, 11, 10, 22, 0, 0, 0), new Timestamp(2021, 11, 11, 4, 0, 0, 0), "DJ2", "Club2", "Ville2");
+		Events event3 = new Events(new Timestamp(2021, 11, 10, 22, 0, 0, 0), new Timestamp(2021, 11, 11, 4, 0, 0, 0), "DJ3", "Club3", "Ville3");
+		Events event4 = new Events(new Timestamp(2021, 11, 10, 22, 0, 0, 0), new Timestamp(2021, 11, 11, 4, 0, 0, 0), "DJ4", "Club4", "Ville4");
+		Events event5 = new Events(new Timestamp(2021, 11, 10, 22, 0, 0, 0), new Timestamp(2021, 11, 11, 4, 0, 0, 0), "DJ5", "Club5", "Ville5");
 		
 	    // Adding the events to the list
 	    ListeEvent.add(event1);
@@ -34,13 +34,18 @@ public class EventDAOMockImpl implements EventDAO {
 	}
 
 	@Override
-	public List<Events> findByLieu(String nomLieu) {
+	public List<Events> findByClub(String nomLieu) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public List<Events> findByVille(String nomVille) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Events> findByMonth(int month) {
+	public List<Events> findByDate(Timestamp dateDebut) {
 		// TODO Auto-generated method stub
 		return null;
 	}
