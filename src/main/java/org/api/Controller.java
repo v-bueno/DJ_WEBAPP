@@ -63,23 +63,25 @@ public String getPlacesDjs() {
 @POST
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/event")
-public Response postEvent(@FormParam("dj") String dj, @FormParam("place") String place, @FormParam("ville") String ville, @FormParam("date") String date, @FormParam("heure_debut") String heure_debut, @FormParam("heure_fin") String heure_fin) {
+public Response postEvent(@FormParam("dj") String dj, @FormParam("place") String place, @FormParam("ville") String ville, @FormParam("jour_debut") String jour_debut, @FormParam("heure_debut") String heure_debut, @FormParam("jour_fin") String jour_fin, @FormParam("heure_fin") String heure_fin) {
     // Create array lists to store the places and DJs
     JsonArray places = new JsonArray();
     JsonArray djs = new JsonArray();
     JsonArray villes = new JsonArray();
-    JsonArray dates = new JsonArray();
+    JsonArray jours_debut = new JsonArray();
+    JsonArray jours_fin = new JsonArray();
     JsonArray heures_debut = new JsonArray();
     JsonArray heures_fin = new JsonArray();
     // Store the form data in an array list
     places.add(place);
     djs.add(dj);
     villes.add(ville);
-    dates.add(date);
+    jours_debut.add(jour_debut);
+    jours_fin.add(jour_fin);
     heures_debut.add(heure_debut);
     heures_fin.add(heure_fin);
     // Return a JSON object with the list of places and DJs
-    String json = "{\"places\": " + places.toString() + ", \"djs\": " + djs.toString() + " , \"villes\": " + villes.toString() + " , \"dates\": " + dates.toString() + " , \"heures_debut\": " + heures_debut.toString() + " , \"heures_fin\": " + heures_fin.toString() + "}";
+    String json = "{\"dateDebut\": " + jours_debut.toString() + heures_debut.toString() + ", \"dateFin\": " + jours_fin.toString() + heures_fin.toString() + " , \"nomDj\": " + djs.toString() + " , \"nomClub\": " + places.toString() + " , \"ville\": " + villes.toString() + "}";
     // Create an HTTP response with the status code 200 (OK) and the JSON in the response body
     return Response.status(Status.OK).entity(json).build();
 }
