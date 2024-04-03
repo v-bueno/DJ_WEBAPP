@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <head>
  <head>
- 	<link rel="icon" type="image/x-icon" href="/DJ-Agenda-2/favicon.ico" />
+ 	<link rel="icon" type="image/x-icon" href="/DJ-Agenda/favicon.ico" />
  	<title>Événements DJ</title>
     <meta charset='utf-8' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
@@ -64,7 +64,7 @@
     	});
 
         window.onload = function() {
-            fetch('/DJ-Agenda-2/api/controller/event')
+            fetch('/DJ-Agenda/api/controller/event')
                 .then(response => response.json())
                 .then(data => {
                     // Extraire les valeurs des champs souhaités
@@ -85,7 +85,7 @@
     <p>DJs : <span id="djs"></span></p>
     
     <!-- Ajouter un formulaire pour ajouter un événement -->
-	<form action="/DJ-Agenda-2/api/controller/event" method="post">
+	<form action="/DJ-Agenda/api/controller/event" method="post">
 		<label for="dj">DJ :</label>
 		<input type="text" id="dj" name="dj" required>
 		<label for="place">Club :</label>
