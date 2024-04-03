@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+//delete DJ avec un bouton
+
+function load() {
+	fetch("/DJ-Agenda-2/api/controller/djs")
+	.then(response => response.json())
+	.then(response => process(response))
+	.catch(error => alert("Erreur : " + error));
+}
+
+function process(response) {
+	var ul = document.createElement("ul");
+	response.forEach(DJ => {
+		var li = document.createElement("li");
+        li.appendChild(document.createTextNode(DJ.nomDeScene));
+        ul.appendChild(li);
+
+        var buttonDel = document.createElement("button");
+        var buttonCha = document.createElement("button");
+        buttonDel.appendChild(document.createTextNode("Supprimer"));
+        buttonCha.appendChild(document.createTextNode("Modifier"));
+        buttonDel.onclick = function () {
+            deleteDJ(DJ.nomDeScene);
+        };
+        buttonCha.onclick = function () {
+            updateDJ(DJ.nomDeScene);
+        };
+        li.appendChild(buttonDel);
+        li.appendChild(buttonCha);
+    });
+    document.body.appendChild(ul);
+
+}
+	
+	
+	
+	function deleteDJ(NomDeScene) {
+			fetch("/DJ-Agenda-2/api/controller/djs/" , {
+				method: "DELETE"
+			})
+				.then(response => {
+					if (response.ok) {
+						alert("DJ supprimé");
+						location.reload();
+					} else {
+						alert("Erreur : " + response.status);
+					}
+				})
+				.catch(error => alert("Erreur : " + error));
+		}
+	
+	function UpdateDJ(NomDeScene) {
+		fetch("/DJ-Agenda-2/api/controller/djs/" , {
+			method: "PUT"
+		})
+			.then(response => {
+				if (response.ok) {
+					alert("DJ modifié");
+					location.reload();
+				} else {
+					alert("Erreur : " + response.status);
+				}
+			})
+			.catch(error => alert("Erreur : " + error));
+	}
+	
+
+
+</script>
+
+<meta charset="ISO-8859-1">
+</head>
+<body>
+<button onClick="load()">Get DJs</button>
+</body>
+</html>
