@@ -3,9 +3,10 @@ package org.api;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-//import java.io.PrintWriter;
-//import java.util.ArrayList;
-
+import java.util.ArrayList;
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 
 import jakarta.servlet.ServletException;
@@ -15,11 +16,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -85,5 +85,24 @@ public Response postEvent(@FormParam("dj") String dj, @FormParam("place") String
 }
 
 	
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("/hello")
+	public String hello() {
+		return "Hello World!";
+	}
+	
+	private EventDAO eventDAO = new EventDAOImpl();
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/events")
+	public String getEvents(@QueryParam("dj") String dj) {
+		List<Events> events = new ArrayList<Events>();
+		events = eventDAO.findAll();
+		
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.create();
+		String json = gson.toJson(events);
+		return json;	}
 }
-
