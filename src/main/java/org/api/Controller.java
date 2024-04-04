@@ -34,28 +34,9 @@ import jakarta.ws.rs.core.Response.Status;
 public class Controller{
 	
 private EventDAO eventDAO = new EventDAOImpl();
+private LieuDAO lieuDAO = new LieuDAOImpl();
 	
-@WebServlet("/event")
-public static class EventServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        OutputStream outputStream = response.getOutputStream();
-        InputStream inputStream = getServletContext().getResourceAsStream("/event.html");
-        if (inputStream == null || inputStream.available() == 0) {
-            // Le fichier est vide ou n'existe pas
-            throw new IOException("Le fichier event.html est vide ou n'existe pas.");
-        }
-        byte[] buffer = new byte[4096];
-        int bytesRead;
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
-        }
-        inputStream.close();
-        outputStream.close();
-    }
-}	
 
 //create post and store the form received in an array list
 @POST
@@ -94,12 +75,24 @@ public Response postEvent(@FormParam("dj") String dj, @FormParam("club") String 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/event")
-	public String getEvents(@QueryParam("dj") String dj) {
+	public String getEvents() {
 		List<Event> events = new ArrayList<Event>();
 		events = eventDAO.findAll();
 		
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.create();
 		String json = gson.toJson(events);
+		return json;	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/lieu")
+	public String getLieux() {
+		List<Lieu> lieux = new ArrayList<Lieu>();
+		lieux = lieuDAO.findAll();
+		
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.create();
+		String json = gson.toJson(lieux);
 		return json;	}
 }
