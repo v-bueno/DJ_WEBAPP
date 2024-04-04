@@ -49,16 +49,6 @@ public static class EventServlet extends HttpServlet {
     }
 }	
 
-@GET
-@Produces(MediaType.APPLICATION_JSON)
-@Path("/event")
-
-public String getPlacesDjs() {
-	// Return a JSON object with a list of places and DJs
-	String json = "{\"places\": [\"Place 1\", \"Place 2\"], \"djs\": [\"DJ 1\", \"DJ 2\"]}";
-
-    return json;
-}
 //create post and store the form received in an array list
 @POST
 @Produces(MediaType.APPLICATION_JSON)
@@ -98,7 +88,7 @@ public Response postEvent(@FormParam("dj") String dj, @FormParam("place") String
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/events")
+	@Path("/event")
 	public String getEvents(@QueryParam("dj") String dj) {
 		List<Events> events = new ArrayList<Events>();
 		events = eventDAO.findAll();

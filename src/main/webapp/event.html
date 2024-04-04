@@ -19,46 +19,51 @@
 }
     </style>
     <script>
-
+	var calendarEl
+	var calendar
     document.addEventListener('DOMContentLoaded', function() {
-    	  var calendarEl = document.getElementById('calendar');
-    	  var calendar = new FullCalendar.Calendar(calendarEl, {
+    	  calendarEl = document.getElementById('calendar');
+    	  calendar = new FullCalendar.Calendar(calendarEl, {
     	    initialView: 'dayGridMonth',
     	    locale: 'fr', // Spécifier la locale française
     	    firstDay: 1,
-    	    events: [ // Ajouter un tableau d'événements
-    	        {
-    	          title: 'Événement 1',
-    	          start: '2024-04-01',
-    	          end: '2024-03-02',
-    	          description: 'Look at me!'
-    	        },
-    	        {
-    	          title: 'Événement 2',
-    	          start: '2024-04-05',
-    	          end: '2024-04-06'
-    	        },
-    	  	],
-    	  	eventDidMount: function(info) {
-                var tooltip = document.createElement('div');
-                tooltip.className = 'fc-tooltip';
-                tooltip.textContent = info.event.title + ' - ' + info.event.extendedProps.description;
-                
-                // Positionner l'info-bulle à côté de la souris
-                document.body.appendChild(tooltip);
-                tooltip.style.position = 'absolute';
-                tooltip.style.display = 'none'; // Caché par défaut
-                
-                info.el.addEventListener('mouseover', function(event) {
-                    tooltip.style.left = event.pageX + 'px';
-                    tooltip.style.top = (event.pageY - tooltip.offsetHeight - 10) + 'px'; // Ajustement pour placer l'info-bulle au-dessus de la souris
-                    tooltip.style.display = 'block'; // Afficher l'info-bulle lorsque survolé
-                });
+    	    eventHeight: 80, // Hauteur des événements
+    	    eventLimit: 2, // Nombre maximum d'événements avant regroupement
+    	    displayEventEnd : true,
+    	    events: 
+    	    	[
+    	      {
+    	        title: 'Événement 1',
+    	        start: '2024-04-01',
+    	        end: '2024-03-02',
+    	        description: 'Look at me!'
+    	      },
+    	      {
+    	        title: 'Événement 2',
+    	        start: '2024-04-05',
+    	        end: '2024-04-06'
+    	      },
+    	    ],
+    	    eventDidMount: function(info) {
+    	      var tooltip = document.createElement('div');
+    	      tooltip.className = 'fc-tooltip';
+    	      tooltip.textContent = info.event.title + ' - ' + info.event.extendedProps.description;
 
-                info.el.addEventListener('mouseout', function() {
-                    tooltip.style.display = 'none'; // Cacher l'info-bulle lorsque la souris quitte l'événement
-                });
-            }
+    	      // Positionner l'info-bulle à côté de la souris
+    	      document.body.appendChild(tooltip);
+    	      tooltip.style.position = 'absolute';
+    	      tooltip.style.display = 'none'; // Caché par défaut
+
+    	      info.el.addEventListener('mouseover', function(event) {
+    	        tooltip.style.left = event.pageX + 'px';
+    	        tooltip.style.top = (event.pageY - tooltip.offsetHeight - 10) + 'px'; // Ajustement pour placer l'info-bulle au-dessus de la souris
+    	        tooltip.style.display = 'block'; // Afficher l'info-bulle lorsque survolé
+    	      });
+
+    	      info.el.addEventListener('mouseout', function() {
+    	        tooltip.style.display = 'none'; // Cacher l'info-bulle lorsque la souris quitte l'événement
+    	      });
+    	    }
     	  });
     	  calendar.render();
     	});
@@ -68,12 +73,20 @@
                 .then(response => response.json())
                 .then(data => {
                     // Extraire les valeurs des champs souhaités
-                    const places = data.places;
-                    const djs = data.djs;
-
+                    for (var event of data){
+                    	let date_debut = new Date(event.dateDebut);
+                    	let date_fin = new Date(event.dateFin);
+                    	calendar.addEvent({
+                    		title : event.nomDj,
+                    		start : date_debut.toISOString(),
+                    		end : date_fin.toISOString(),
+                    		description : event.nomClub + ' à ' + event.ville
+                    	})
+                    };
+                    calendar.render();
+                    console.log(calendar.getEvents());
                     // Afficher les valeurs des champs dans la page HTML
-                    document.getElementById('places').textContent = places.join(', ');
-                    document.getElementById('djs').textContent = djs.join(', ');
+                    
                 })
                 .catch(error => console.error('Erreur :', error));
         };
