@@ -88,4 +88,44 @@ public Response postEvent(@FormParam("dj") String dj, @FormParam("club") String 
 		Gson gson = builder.create();
 		String json = gson.toJson(lieux);
 		return json;	}
+
+    @GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/djs")
+    public String getDJs() {
+		List<DJ> djs=djDao.getDJs();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String json=gson.toJson(djs);
+		return json;
+    }
+	
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/djs/{nom_scene}")
+	public void deleteDJ(@PathParam("nom_scene") String nomDeScene) {
+	    djDao.deleteDJ(nomDeScene);
+	}
+	
+	@POST
+	@Path("/djs")
+	public Response AjouterDJ(@FormParam("nomDeScene") String nomDeScene, @FormParam("nom") String nom, @FormParam("prenom") String prenom, @FormParam("style_musical") String style_musical, @FormParam("lieuDeResidence") String lieuResidence,
+            @FormParam("dateDeNaissance") Date dateNaissance) {
+		System.out.println("Nom de scene: " + nomDeScene);
+		djDao.addDJ(nomDeScene, nom, prenom, style_musical, lieuResidence, dateNaissance);
+		return Response.status(201).build();
+	}
+	
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/djs")
+	public void updateDJ(@FormParam("nom_sceneCh") String nomDeScene, @FormParam("nomCh") String nom, @FormParam("prenomCh") String prenom, @FormParam("style_musicalCh") String genre, @FormParam("lieu_residenceCh") String lieuResidence,
+            @FormParam("date_naissanceCh") Date dateNaissance) {
+		System.out.println("Nom de scene: " + nomDeScene);
+		System.out.println("Nom: " + nom);
+		System.out.println("Prenom: " + prenom);
+		System.out.println("Genre: " + genre);
+		System.out.println("Lieu de residence: " + lieuResidence);
+		System.out.println("Date de naissance: " + dateNaissance);
+		djDao.updateDJ(nomDeScene, nom, prenom, genre, lieuResidence, dateNaissance);
+	}
 }

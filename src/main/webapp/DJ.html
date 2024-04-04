@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script>
+function loadDJ() {
+	fetch("/DJ-Agenda/api/controller/djs")
+	.then(response => response.json())
+	.then(response => processDJ(response))
+	.catch(error => alert("Erreur : " + error));
+}
+
+function processDJ(response) {
+    var ul = document.createElement("ul");
+    response.forEach(DJ => {
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(DJ.nomDeScene));
+        ul.appendChild(li);
+
+        var buttonDel = document.createElement("button");
+        var buttonCha = document.createElement("button");
+        buttonDel.appendChild(document.createTextNode("Supprimer"));
+        buttonCha.appendChild(document.createTextNode("Modifier"));
+
+        buttonDel.onclick = function () {
+            deleteDJ(DJ.nomDeScene);
+        };
+        buttonCha.onclick = function () {
+        	fillUpdateForm(DJ);
+        };
+
+        li.appendChild(buttonDel);
+        li.appendChild(buttonCha);
+    });
+    document.body.appendChild(ul);
+}
+	
+function deleteDJ(NomDeScene) {
+	fetch("/DJ-Agenda/api/controller/djs/"+ NomDeScene , {
+		method: "DELETE"
+	})
+		.then(response => {
+			if (response.ok) {
+				alert("DJ supprimé");
+				location.reload();
+			} else {
+				alert("Erreur : " + response.status);
+			}
+		})
+		.catch(error => alert("Erreur : " + error));
+}
+
+function updateDJ() {
+    // Récupérez les valeurs des champs de formulaire
+    var nom = document.getElementById('nomCh').value;
+    var prenom = document.getElementById('prenomCh').value;
+    var genre = document.getElementById('style_musicalCh').value;
+    var lieuResidence = document.getElementById('lieu_residenceCh').value;
+    var dateNaissance = document.getElementById('date_naissanceCh').value;
+    var nomDeScene = document.getElementById('nomDeSceneCh').value;
+	console.log(nom);
+	console.log(prenom);
+		console.log(genre);
+		console.log(lieuResidence);
+		console.log(dateNaissance);
+		console.log(nomDeScene);
+		
+    // Envoyez une requête PUT pour mettre à jour les informations du DJ
+    fetch("/DJ-Agenda/api/controller/djs?nomCh=" + nom + "&prenomCh=" + prenom + "&nom_sceneCh=" + nomDeScene + "&lieu_residenceCh=" + lieuResidence + "&date_naissanceCh=" + dateNaissance + "&style_musicalCh=" + genre
+    		, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("DJ modifié avec succès");
+            location.reload(); // Rechargez la page pour afficher les mises à jour
+        } else {
+            alert("Erreur lors de la modification du DJ");
+        }
+    })
+    .catch(error => alert("Erreur : " + error));
+}
+
+function fillUpdateForm(DJ) {
+    // Supprimez le formulaire précédent s'il existe déjà
+    var existingForm = document.getElementById('updateForm');
+    if (existingForm) {
+        existingForm.remove();
+    }
+
+    // Créez un nouveau formulaire de modification
+    var form = document.createElement('form');
+    form.id = 'updateForm';
+
+    // Ajoutez des champs de formulaire pré-remplis avec les informations du DJ actuel
+    form.innerHTML = `
+        <input type="text" id="nomCh" name="nomCh" value="${DJ.nom}"></input><br>
+        <input type="text" id="prenomCh" name="prenomCH" value="${DJ.prenom}"></input><br>
+        <input type="text" id="nomDeSceneCh" name="nomDeSceneCh" value="${DJ.nomDeScene}" readonly></input><br>
+        <input type="text" id="lieu_residenceCh" name="lieu_residenceCh" value="${DJ.lieuResidence}"></input><br>
+        <input type="date" id="date_naissanceCh" name="date_naissanceCh" value="${DJ.dateNaissance}"></input><br>
+        <input type="text" id="style_musicalCh" name="style_musicalCh" value="${DJ.genre}"></input><br>
+        <button type="button" onclick="updateDJ()">Mettre à jour</button>
+    `;
+
+    // Ajoutez le formulaire à la page
+    document.body.appendChild(form);
+}
+
+
+
+	
+</script>
+
+<h1> Ajouter DJ </h1>
+
+<body onload="loadDJ()">
+
+<form action="/DJ-Agenda/api/controller/djs" method="post">
+<input type ="text" id="nom" name="nom" placeholder="nom"></input>
+<input type ="text" id="prenom" name="prenom" placeholder="prenom"></input>
+<input type ="text" id="nomDeScene" name="nomDeScene" placeholder="nomDeScene"></input>
+<input type ="text" id="lieuDeResidence" name="lieuDeResidence" placeholder="lieu de résidence"></input>
+<input type ="date" id="dateDeNaissance" name="dateDeNaissance" placeholder="Date de naissance"></input>
+<input type ="text" id="style_musical" name="style_musical" placeholder="style musical"></input>
+<button type="submit" > Ajouter </button>
+
+
+</form>
+
+<h1> Liste des DJ </h1>
+
+
+
+</body>
+</html>
