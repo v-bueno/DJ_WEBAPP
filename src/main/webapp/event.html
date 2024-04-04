@@ -30,20 +30,7 @@
     	    eventHeight: 80, // Hauteur des événements
     	    eventLimit: 2, // Nombre maximum d'événements avant regroupement
     	    displayEventEnd : true,
-    	    events: 
-    	    	[
-    	      {
-    	        title: 'Événement 1',
-    	        start: '2024-04-01',
-    	        end: '2024-03-02',
-    	        description: 'Look at me!'
-    	      },
-    	      {
-    	        title: 'Événement 2',
-    	        start: '2024-04-05',
-    	        end: '2024-04-06'
-    	      },
-    	    ],
+    	    events: [],
     	    eventDidMount: function(info) {
     	      var tooltip = document.createElement('div');
     	      tooltip.className = 'fc-tooltip';
@@ -93,9 +80,8 @@
     </script>
 </head>
 <body>
-    <h1>Événements DJ</h1>
-    <p>Lieux : <span id="places"></span></p>
-    <p>DJs : <span id="djs"></span></p>
+    <h1>Planning des événements</h1>
+    <h2>Ajouter</h2>
     
     <!-- Ajouter un formulaire pour ajouter un événement -->
 	<form action="/DJ-Agenda/api/controller/event" method="post">
