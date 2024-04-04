@@ -21,6 +21,33 @@
     <script>
 	var calendarEl
 	var calendar
+	function fillCalendar(url) {
+		// Supprimer les événements existants
+		calendar.getEvents().forEach(event => event.remove());
+		
+		// Récupérer les événements depuis l'API REST
+		fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // Extraire les valeurs des champs souhaités
+            for (var event of data){
+            	let date_debut = new Date(event.dateDebut);
+            	let date_fin = new Date(event.dateFin);
+            	calendar.addEvent({
+            		title : event.nomDj,
+            		start : date_debut.toISOString(),
+            		end : date_fin.toISOString(),
+            		description : event.nomClub + ' à ' + event.ville
+            	})
+            };
+            calendar.render();
+            console.log(calendar.getEvents());
+            // Afficher les valeurs des champs dans la page HTML
+            
+        })
+        .catch(error => console.error('Erreur :', error));
+		
+	}
     document.addEventListener('DOMContentLoaded', function() {
     	  calendarEl = document.getElementById('calendar');
     	  calendar = new FullCalendar.Calendar(calendarEl, {
@@ -55,32 +82,14 @@
     	  calendar.render();
     	});
 
-        window.onload = function() {
-            fetch('/DJ-Agenda/api/controller/event')
-                .then(response => response.json())
-                .then(data => {
-                    // Extraire les valeurs des champs souhaités
-                    for (var event of data){
-                    	let date_debut = new Date(event.dateDebut);
-                    	let date_fin = new Date(event.dateFin);
-                    	calendar.addEvent({
-                    		title : event.nomDj,
-                    		start : date_debut.toISOString(),
-                    		end : date_fin.toISOString(),
-                    		description : event.nomClub + ' à ' + event.ville
-                    	})
-                    };
-                    calendar.render();
-                    console.log(calendar.getEvents());
-                    // Afficher les valeurs des champs dans la page HTML
-                    
-                })
-                .catch(error => console.error('Erreur :', error));
+        window.onload = function () {
+				fillCalendar('/DJ-Agenda/api/controller/event?dj=' + document.getElementById('input_dj').value);
         };
     </script>
 </head>
 <body>
     <h1>Planning des événements</h1>
+    <div id="addEvent">
     <h2>Ajouter</h2>
     
     <!-- Ajouter un formulaire pour ajouter un événement -->
@@ -99,7 +108,15 @@
 		<input type="time" id="heure_fin" name="heure_fin" required>
 		<button type="submit">Ajouter</button>
 	</form>
+	</div>
 	<br>
+	<h2>Rechercher</h2>
+	<div id="searchEvent">
+	<input type="text" id="input_dj" value="" placeholder="DJ"></input>
+	<input type="button" id="Valider" value="Rechercher" onClick="fillCalendar('/DJ-Agenda/api/controller/event?dj=' + document.getElementById('input_dj').value)"></input>
+	</div>
+	<br>
+	<h2>Calendrier</h2>
 	<div id='calendar'></div>
 </body>
 </html>

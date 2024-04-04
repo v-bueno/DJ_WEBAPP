@@ -96,7 +96,14 @@ public Response postEvent(@FormParam("dj") String dj, @FormParam("club") String 
 	@Path("/event")
 	public String getEvents(@QueryParam("dj") String dj) {
 		List<Event> events = new ArrayList<Event>();
-		events = eventDAO.findAll();
+		System.out.println("DJ : " + dj);
+		if ("".equals(dj)) {
+			events = eventDAO.findAll();
+		} else {
+			events = eventDAO.findByDJ(dj);
+		}
+		//print Events list
+		System.out.println("Liste des événements :" + events.toString());
 		
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.create();

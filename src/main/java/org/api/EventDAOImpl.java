@@ -46,11 +46,11 @@ public class EventDAOImpl implements EventDAO {
 			statement = connexion.createStatement();
 			ResultSet rs = statement.executeQuery("Select * FROM Evenement WHERE nom_DJ = '" + nomDeScene + "'") ;
 			while (rs.next()) {
-				Timestamp dateDebut = rs.getTimestamp("dateDebut");
-				Timestamp dateFin = rs.getTimestamp("dateFin");
-				String nomDj = rs.getString("nomDj");
-				String nomClub = rs.getString("nomClub");
-				String ville = rs.getString("ville");
+				Timestamp dateDebut = rs.getTimestamp("date_Debut");
+				Timestamp dateFin = rs.getTimestamp("date_Fin");
+				String nomDj = rs.getString("nom_Dj");
+				String nomClub = rs.getString("nom_lieu");
+				String ville = rs.getString("ville_lieu");
 				
 				Event event = new Event(dateDebut, dateFin, nomDj, nomClub, ville);
 				
@@ -73,11 +73,11 @@ public class EventDAOImpl implements EventDAO {
 			statement = connexion.createStatement();
 			ResultSet rs = statement.executeQuery("Select * FROM Evenement WHERE nom_lieu = '" + nom_Club + "'") ;
 			while (rs.next()) {
-				Timestamp dateDebut = rs.getTimestamp("dateDebut");
-				Timestamp dateFin = rs.getTimestamp("dateFin");
-				String nomDj = rs.getString("nomDj");
-				String nomClub = rs.getString("nomClub");
-				String ville = rs.getString("ville");
+				Timestamp dateDebut = rs.getTimestamp("date_Debut");
+				Timestamp dateFin = rs.getTimestamp("date_Fin");
+				String nomDj = rs.getString("nom_Dj");
+				String nomClub = rs.getString("nom_lieu");
+				String ville = rs.getString("ville_lieu");
 				
 				Event event = new Event(dateDebut, dateFin, nomDj, nomClub, ville);
 				
@@ -100,11 +100,11 @@ public class EventDAOImpl implements EventDAO {
 			statement = connexion.createStatement();
 			ResultSet rs = statement.executeQuery("Select * FROM Evenement WHERE ville = '" + nomVille + "'");
 			while (rs.next()) {
-				Timestamp dateDebut = rs.getTimestamp("dateDebut");
-				Timestamp dateFin = rs.getTimestamp("dateFin");
-				String nomDj = rs.getString("nomDj");
-				String nomClub = rs.getString("nomClub");
-				String ville = rs.getString("ville");
+				Timestamp dateDebut = rs.getTimestamp("date_Debut");
+				Timestamp dateFin = rs.getTimestamp("date_Fin");
+				String nomDj = rs.getString("nom_Dj");
+				String nomClub = rs.getString("nom_lieu");
+				String ville = rs.getString("ville_lieu");
 
 				Event event = new Event(dateDebut, dateFin, nomDj, nomClub, ville);
 
