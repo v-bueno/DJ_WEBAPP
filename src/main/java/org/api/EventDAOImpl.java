@@ -1,6 +1,7 @@
 package org.api;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,10 +11,10 @@ import java.sql.Timestamp;
 public class EventDAOImpl implements EventDAO {
 	
 	@Override
-	public List<Events> findAll() {
+	public List<Event> findAll() {
 		Connection connexion = DBManager.getInstance().getConnection();
 		Statement statement;
-		List<Events> ListeEvent = new ArrayList<Events>();
+		List<Event> ListeEvent = new ArrayList<Event>();
 		try {
 			statement = connexion.createStatement();
 			ResultSet rs = statement.executeQuery("Select * FROM Evenement") ;
@@ -24,10 +25,10 @@ public class EventDAOImpl implements EventDAO {
 				String nomClub = rs.getString("nom_lieu");
 				String ville = rs.getString("ville_lieu");
 				
-				Events event = new Events(dateDebut, dateFin, nomDj, nomClub, ville);
+				Event event = new Event(dateDebut, dateFin, nomDj, nomClub, ville);
 				
 				ListeEvent.add(event);
-				//print the events
+				//print the Event
                 System.out.println("Event: " + event.getDateDebut() + " " + event.getDateFin() + " " + event.getNomDj() + " " + event.getNomClub() + " " + event.getNomVille());			}
 		} catch (SQLException e) {
 			e.printStackTrace();  
@@ -37,10 +38,10 @@ public class EventDAOImpl implements EventDAO {
 	}
 	
 	@Override
-	public List<Events> findByDJ(String nomDeScene) {
+	public List<Event> findByDJ(String nomDeScene) {
 		Connection connexion = DBManager.getInstance().getConnection();
 		Statement statement;
-		List<Events> ListeEvent = new ArrayList<Events>();
+		List<Event> ListeEvent = new ArrayList<Event>();
 		try {
 			statement = connexion.createStatement();
 			ResultSet rs = statement.executeQuery("Select * FROM Evenement WHERE nom_DJ = '" + nomDeScene + "'") ;
@@ -51,10 +52,10 @@ public class EventDAOImpl implements EventDAO {
 				String nomClub = rs.getString("nomClub");
 				String ville = rs.getString("ville");
 				
-				Events event = new Events(dateDebut, dateFin, nomDj, nomClub, ville);
+				Event event = new Event(dateDebut, dateFin, nomDj, nomClub, ville);
 				
 				ListeEvent.add(event);
-				//print the events
+				//print the Event
                 System.out.println("Event: " + event.getDateDebut() + " " + event.getDateFin() + " " + event.getNomDj() + " " + event.getNomClub() + " " + event.getNomVille());			}
 		} catch (SQLException e) {
 			e.printStackTrace();  
@@ -64,10 +65,10 @@ public class EventDAOImpl implements EventDAO {
 	}
 
 	@Override
-	public List<Events> findByClub(String nom_Club) {
+	public List<Event> findByClub(String nom_Club) {
 		Connection connexion = DBManager.getInstance().getConnection();
 		Statement statement;
-		List<Events> ListeEvent = new ArrayList<Events>();
+		List<Event> ListeEvent = new ArrayList<Event>();
 		try {
 			statement = connexion.createStatement();
 			ResultSet rs = statement.executeQuery("Select * FROM Evenement WHERE nom_lieu = '" + nom_Club + "'") ;
@@ -78,10 +79,10 @@ public class EventDAOImpl implements EventDAO {
 				String nomClub = rs.getString("nomClub");
 				String ville = rs.getString("ville");
 				
-				Events event = new Events(dateDebut, dateFin, nomDj, nomClub, ville);
+				Event event = new Event(dateDebut, dateFin, nomDj, nomClub, ville);
 				
 				ListeEvent.add(event);
-				//print the events
+				//print the Event
                 System.out.println("Event: " + event.getDateDebut() + " " + event.getDateFin() + " " + event.getNomDj() + " " + event.getNomClub() + " " + event.getNomVille());			}
 		} catch (SQLException e) {
 			e.printStackTrace();  
@@ -91,10 +92,10 @@ public class EventDAOImpl implements EventDAO {
 	}
 	
 	@Override
-	public List<Events> findByVille(String nomVille) {
+	public List<Event> findByVille(String nomVille) {
 		Connection connexion = DBManager.getInstance().getConnection();
 		Statement statement;
-		List<Events> ListeEvent = new ArrayList<Events>();
+		List<Event> ListeEvent = new ArrayList<Event>();
 		try {
 			statement = connexion.createStatement();
 			ResultSet rs = statement.executeQuery("Select * FROM Evenement WHERE ville = '" + nomVille + "'");
@@ -105,10 +106,10 @@ public class EventDAOImpl implements EventDAO {
 				String nomClub = rs.getString("nomClub");
 				String ville = rs.getString("ville");
 
-				Events event = new Events(dateDebut, dateFin, nomDj, nomClub, ville);
+				Event event = new Event(dateDebut, dateFin, nomDj, nomClub, ville);
 
 				ListeEvent.add(event);
-				// print the events
+				// print the Event
 				System.out.println("Event: " + event.getDateDebut() + " " + event.getDateFin() + " " + event.getNomDj()
 						+ " " + event.getNomClub() + " " + event.getNomVille());
 			}
@@ -120,9 +121,41 @@ public class EventDAOImpl implements EventDAO {
 	}
 	
 	@Override
-	public List<Events> findByDate(Timestamp dateDebut) {
+	public List<Event> findByDate(Timestamp dateDebut) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	public void insertEvent(Event event) {
+	    Connection connexion = null;
+	    PreparedStatement statement = null;
+	    try {
+	        connexion = DBManager.getInstance().getConnection();
+	        String query = "call Ajout_Event(?, ?, ?, ?, ?)";
+	        statement = connexion.prepareStatement(query);
+	        statement.setString(1, event.getDateDebut().toString());
+	        statement.setString(2, event.getDateFin().toString());
+	        statement.setString(3, event.getNomDj());
+	        statement.setString(4, event.getNomClub());
+	        statement.setString(5, event.getNomVille());
+	        statement.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        if (statement != null) {
+	            try {
+	                statement.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (connexion != null) {
+	            try {
+	                connexion.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	}
 }

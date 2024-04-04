@@ -3,14 +3,14 @@ package org.api;
 import java.sql.Timestamp;
 import java.util.Date;
 
-public class Events {
+public class Event {
 	private Timestamp dateDebut;
 	private Timestamp dateFin;
 	private String nomDj;
 	private String nomClub;
 	private String ville;
 	
-	public Events(Timestamp dateDebut, Timestamp dateFin, String nomDj, String nomClub, String ville) {
+	public Event(Timestamp dateDebut, Timestamp dateFin, String nomDj, String nomClub, String ville) {
 		super();
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;

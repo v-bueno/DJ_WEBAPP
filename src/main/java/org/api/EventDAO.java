@@ -5,13 +5,15 @@ import java.sql.Timestamp;
 
 public interface EventDAO {
 	
-	List<Events> findAll();
+	List<Event> findAll();
 
-	List<Events> findByDJ(String nomDeScene);
+	List<Event> findByDJ(String nomDeScene);
 	
-	List<Events> findByClub(String nomClub);
+	List<Event> findByClub(String nomClub);
 	
-	List<Events> findByVille(String nomVille);
+	List<Event> findByVille(String nomVille);
 	
-	List<Events> findByDate(Timestamp dateDebut);
+	List<Event> findByDate(Timestamp dateDebut);
+	
+	void insertEvent(Event event);
 }
