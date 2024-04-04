@@ -7,7 +7,7 @@
 <body>
 <script>
 function loadDJ() {
-	fetch("/DJ-Agenda/api/controller/djs")
+	fetch("/DJ-Agenda/api/controller/djs?topfive=false")
 	.then(response => response.json())
 	.then(response => processDJ(response))
 	.catch(error => alert("Erreur : " + error));

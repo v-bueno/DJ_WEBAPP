@@ -9,6 +9,7 @@ public class DJ{
 	private String style_musical;
 	private String lieuResidence;
 	private Date dateNaissance;
+	int nombre_evenements;
 	
 	public DJ(String nomDeScene, String nom, String prenom, String style_musical, String lieuResidence, Date dateNaissance) {
 		this.nomDeScene = nomDeScene;
@@ -19,6 +20,14 @@ public class DJ{
 		this.dateNaissance = dateNaissance;
 	}
 	
+	
+	public DJ(String nomDeScene, int nombre_evenements) {
+		super();
+		this.nomDeScene = nomDeScene;
+		this.nombre_evenements = nombre_evenements;
+	}
+
+
 	public String getNomDeScene() {
 		return nomDeScene;
 	}

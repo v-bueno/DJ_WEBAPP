@@ -96,8 +96,14 @@ public Response postEvent(@FormParam("dj") String dj, @FormParam("club") String 
     @GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/djs")
-    public String getDJs() {
-		List<DJ> djs=djDao.getDJs();
+    public String getDJs(@QueryParam("topfive") boolean top5) {
+    	List<DJ> djs = new ArrayList<DJ>();
+    	if(top5) {
+    		djs = djDao.getTopFive();
+    	}
+    	else {
+    		djs=djDao.getDJs();
+    	}
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json=gson.toJson(djs);
 		return json;

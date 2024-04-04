@@ -8,4 +8,5 @@ public interface DJDao {
 	void deleteDJ(String nomDeScene);
 	void addDJ(String nomDeScene, String nom, String prenom, String style_musical, String lieuResidence, Date dateNaissance);
 	void updateDJ(String nomDeScene, String nom, String prenom, String style_musical, String lieuResidence, Date dateNaissance);
+	List<DJ> getTopFive();
 }

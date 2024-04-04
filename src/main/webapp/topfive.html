@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Top 5</title>
+</head>
+<body>
+<script>
+function loadDJ() {
+	fetch("/DJ-Agenda/api/controller/djs?topfive=true")
+	.then(response => response.json())
+	.then(response => processDJ(response))
+	.catch(error => alert("Erreur : " + error));
+}
+
+function processDJ(response) {
+    var ul = document.createElement("ul");
+
+    response.forEach(DJ => {
+        var li = document.createElement("li");
+        var nomDeScene = document.createTextNode(DJ.nomDeScene);
+        var nombreEvenements = document.createTextNode(DJ.nombre_evenements);
+
+        li.appendChild(nomDeScene);
+        li.appendChild(document.createTextNode(" ")); // Ajoute un espace entre les colonnes
+        li.appendChild(nombreEvenements);
+
+        ul.appendChild(li);
+    });
+
+    document.body.appendChild(ul);
+}
+
+
+	
+</script>
+
+<body onload="loadDJ()">
+
+
+<h1> Liste des DJ du top 5</h1>
+
+
+
+</body>
+</html>

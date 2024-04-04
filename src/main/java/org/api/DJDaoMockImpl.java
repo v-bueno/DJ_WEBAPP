@@ -83,7 +83,29 @@ public class DJDaoMockImpl implements DJDao {
 			e.printStackTrace();
 		}
 	}
-
+	
+	@Override
+	public List<DJ> getTopFive(){
+		Connection connection = DBManager.getInstance().getConnection();
+		Statement statement;
+		ResultSet rs;
+		List<DJ> djs = new ArrayList<DJ>();
+		try {
+			statement = connection.createStatement();
+			rs = statement.executeQuery("call Top_5_DJ()");
+			while (rs.next()) {
+				System.out.println(rs);
+				String nom = rs.getString("Nom");
+				int nombre_evenements =  rs.getInt("Nombre");
+				DJ dj = new DJ(nom, nombre_evenements);
+				djs.add(dj);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		return djs;
+	}
 	
 	public DJDaoMockImpl() {
 		// TODO Auto-generated constructor stub
