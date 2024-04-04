@@ -28,8 +28,7 @@ public class EventDAOImpl implements EventDAO {
 				Event event = new Event(dateDebut, dateFin, nomDj, nomClub, ville);
 				
 				ListeEvent.add(event);
-				//print the Event
-                System.out.println("Event: " + event.getDateDebut() + " " + event.getDateFin() + " " + event.getNomDj() + " " + event.getNomClub() + " " + event.getNomVille());			}
+            }
 		} catch (SQLException e) {
 			e.printStackTrace();  
 		}
@@ -55,8 +54,7 @@ public class EventDAOImpl implements EventDAO {
 				Event event = new Event(dateDebut, dateFin, nomDj, nomClub, ville);
 				
 				ListeEvent.add(event);
-				//print the Event
-                System.out.println("Event: " + event.getDateDebut() + " " + event.getDateFin() + " " + event.getNomDj() + " " + event.getNomClub() + " " + event.getNomVille());			}
+           }
 		} catch (SQLException e) {
 			e.printStackTrace();  
 		}
@@ -82,8 +80,7 @@ public class EventDAOImpl implements EventDAO {
 				Event event = new Event(dateDebut, dateFin, nomDj, nomClub, ville);
 				
 				ListeEvent.add(event);
-				//print the Event
-                System.out.println("Event: " + event.getDateDebut() + " " + event.getDateFin() + " " + event.getNomDj() + " " + event.getNomClub() + " " + event.getNomVille());			}
+            }
 		} catch (SQLException e) {
 			e.printStackTrace();  
 		}
@@ -109,9 +106,6 @@ public class EventDAOImpl implements EventDAO {
 				Event event = new Event(dateDebut, dateFin, nomDj, nomClub, ville);
 
 				ListeEvent.add(event);
-				// print the Event
-				System.out.println("Event: " + event.getDateDebut() + " " + event.getDateFin() + " " + event.getNomDj()
-						+ " " + event.getNomClub() + " " + event.getNomVille());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

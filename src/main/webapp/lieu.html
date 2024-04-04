@@ -1,8 +1,5 @@
 <html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <head>
-
-<meta charset="utf-8">
-
 <style>
 table, th, td {
   border: 1px solid;
@@ -15,7 +12,6 @@ div {
 margin-top: 10px;}
 </style>
 <script>
-
 function loadLieux(url) {
 	fetch(url)
 	.then(response => response.json())
@@ -78,19 +74,11 @@ function searchByDj() {
 <mso:_SharedFileIndex msdt:dt="string"></mso:_SharedFileIndex>
 </mso:CustomDocumentProperties>
 </xml><![endif]-->
-</head>
+<title></title></head>
+<body onload="loadLieux('/DJ-Agenda/api/controller/lieu')">
 
-<!--  <body onload="loadLieux('/DJ-Agenda/api/controller/lieu')">-->
+<h1>Liste des lieux</h1>
 
-<!--  <h1>Liste des lieux</h1> -->
-
-<!--   <div id="lieulist"></div> -->
-<body>
-
-<h1>Site de gestion des tournées de DJ</h1>
-
-<button onclick="window.location.href = 'lieu.html';">Lieux</button>
-<button onclick="window.location.href = 'event.html';">Evenements</button>
-
+<div id="lieulist"></div>
 </body>
 </html>
