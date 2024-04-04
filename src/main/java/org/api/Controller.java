@@ -3,6 +3,8 @@ package org.api;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,13 +66,19 @@ public Response postEvent(@FormParam("dj") String dj, @FormParam("club") String 
 	try {
 		eventDAO.insertEvent(event);
 		// Créer une réponse HTTP avec le code de statut 201 (Created) et un message indiquant que l'insertion s'est bien déroulée
-        return Response.status(Status.CREATED).entity("L'événement a été créé avec succès").build();
+		return Response.seeOther(new URI("/DJ-Agenda/ajoutEvent/succes.html")).build();
 	}
 	catch(Exception e) {
 		e.printStackTrace();
+		try {
+			return Response.seeOther(new URI("/DJ-Agenda/ajoutEvent/echec.html")).build();
+		}
+		catch(URISyntaxException ep) {
+			ep.printStackTrace();
+		}
 		// Créer une réponse HTTP avec le code de statut 500 (Internal Server Error) et un message indiquant que l'insertion a échoué
-        return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Une erreur s'est produite lors de la création de l'événement").build();
 	}
+	return null;
 
     // Create an HTTP response with the status code 200 (OK) and the JSON in the response body
 }

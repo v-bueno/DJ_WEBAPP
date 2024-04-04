@@ -141,6 +141,7 @@ public class EventDAOImpl implements EventDAO {
 	        statement.executeUpdate();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
+	        throw new RuntimeException("Erreur lors de l'insertion de l'événement", e);
 	    } finally {
 	        if (statement != null) {
 	            try {
